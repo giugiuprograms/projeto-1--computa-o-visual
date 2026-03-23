@@ -24,6 +24,13 @@ Como o projeto foi desenvolvido em ambiente **macOS**, decidimos disponibilizar 
 
 ---
 
+## Contribuição do grupo
+* ***Giulia Araki:*** Configuração do ambiente macOS, interface gráfica (botões/janelas), lógica de eventos e integração final.
+* ***Felipe Carvalho:*** Funções de conversão para escala de cinza e cálculo matemático do histograma original.
+* ***Gabriel Rodrigues:*** Implementação do algoritmo de equalização (CDF) e função de salvamento de arquivos.
+
+---
+
 ## Funcionalidades Realizadas
 - [x] **Carregamento Multiformato:** Suporte a PNG, JPG e BMP via `SDL_image`.
 - [x] **Tratamento de Erros:** Verificação de integridade de arquivos e caminhos.
@@ -38,6 +45,11 @@ Como o projeto foi desenvolvido em ambiente **macOS**, decidimos disponibilizar 
 ---
 
 ## Como Compilar e Executar (macOS)
+### Compilação
+gcc main.c -o programa -I/opt/homebrew/include -L/opt/homebrew/lib -lSDL3 -lSDL3_image -lSDL3_ttf
+
+### Execução
+./programa test.jpg
 
 ### Pré-requisitos
 Certifique-se de ter o **Homebrew** instalado e as bibliotecas necessárias:
