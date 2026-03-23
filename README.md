@@ -44,6 +44,47 @@ Como o projeto foi desenvolvido em ambiente **macOS**, decidimos disponibilizar 
 
 ---
 
+Abaixo, detalhamos como cada exigência técnica foi implementada no código-fonte:
+
+### 1. Carregamento de Imagem e Tratamento de Erros
+* **Formatos Suportados:** PNG, JPG e BMP via `SDL_image`.
+* **Segurança:** O programa valida o ponteiro da imagem e interrompe a execução com mensagem de erro caso o arquivo seja inválido ou inexistente.
+* *Evidência (Linhas 128-130):* `if (!image) { printf("Erro na imagem!\n"); return 1; }`
+
+### 2. Escala de Cinza (Conversão e Base)
+* **Fórmula de Luminância:** Implementação rigorosa dos pesos $Y = 0.2125 \cdot R + 0.7154 \cdot G + 0.0721 \cdot B$.
+* **Processamento:** A imagem em escala de cinza (`gray`) é a entrada mandatória para o histograma e a equalização.
+* *Evidência:* Função `convertToGrayscale` (Linhas 19-39).
+
+### 3. Interface Gráfica (GUI) com Duas Janelas
+* **Janela Principal:** Exibe a imagem processada, adapta-se ao tamanho do arquivo e inicia centralizada.
+* **Janela Secundária:** Janela "filha" de tamanho fixo posicionada lateralmente, contendo o histograma e os controles.
+* *Evidência (Linhas 133-138):* Uso de `SDL_CreateWindow` e `SDL_SetWindowParent`.
+
+### 4. Análise e Exibição do Histograma
+* **Gráfico:** Exibição proporcional das intensidades de cinza.
+* **Estatísticas:** Cálculo de Média (Brilho) e Desvio Padrão (Contraste) com classificação automática.
+* **Texto:** Uso da biblioteca `SDL_ttf` para renderizar as informações dinâmicas em amarelo.
+* *Evidência:* Funções `drawHistogram` e `renderClassification`.
+
+### 5. Equalização do Histograma (Interatividade)
+* **Botão Primitivo:** Desenhado nativamente com `SDL_RenderFillRect`.
+* **Feedback Visual:** Cores Azul (Neutro), Azul Claro (Hover) e Azul Escuro (Click).
+* **Toggle de Estado:** O botão alterna o processamento e o texto entre "Equalizar" e "Ver Original".
+* *Evidência:* Função `renderButton` e lógica de eventos (Linhas 147-152).
+
+### 6. Salvamento de Imagem
+* **Tecla 'S':** Salva o estado atual da janela principal (original cinza ou equalizada) como `output_image.png`, sobrescrevendo arquivos existentes.
+* *Evidência (Linhas 154-157):* `if (e.key.scancode == SDL_SCANCODE_S) { IMG_SavePNG(...) }`
+
+---
+
+## 🛠️ Requisitos Técnicos e Compilação
+
+* **Linguagem:** C (Padrão C99+).
+* **Compilador:** Compatível com `gcc` 15.1.0.
+* **Qualidade:** Código organizado em estruturas e funções, com gerenciamento rigoroso de memória (`SDL_Destroy`).
+
 ## Como Compilar e Executar (macOS)
 ### Compilação
 gcc main.c -o programa -I/opt/homebrew/include -L/opt/homebrew/lib -lSDL3 -lSDL3_image -lSDL3_ttf
