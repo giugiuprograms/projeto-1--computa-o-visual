@@ -1,5 +1,5 @@
 /* * Projeto 1 (Proj1) - Processamento de Imagens
- * Disciplina: Computação Visual
+ * Disciplina: Computação Visual - 7C
  * Integrantes: Felipe Carvalho RA: 10409804, Gabriel Rodrigues RA: 10409071, Giulia Araki RA: 10408954
  */
 
